@@ -61,30 +61,16 @@ public class TelematicsService {
         averageEngineSize = averageEngineSize / noOfVehicles;
 
         //need to adjust decimal places on average figures
-
-
-        //read dashboard html file into an arraylist
-//        try {
-//            ArrayList<String> CarHTML = new ArrayList<String>();
-//            File file1 = new File("dashboard.html");
-//            FileReader fr = new FileReader(file1);
-//            BufferedReader br = new BufferedReader(fr);
-//            String data;
-//            while ((data = br.readLine()) != null) {
-//                CarHTML.add(data);
-//            }
-//
-//            CarHTML.add("<h1>Hi There</h1>");
-//            System.out.println(CarHTML);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        String.format("%.1f", averageOdometer);
+        String.format("%.1f", averageConsumption);
+        String.format("%.1f", averageLastOilChange);
+        String.format("%.1f", averageEngineSize);
 
        Map<Integer, String> CarHTML = new HashMap<Integer,String>();
        CarHTML.put(0, "<html>");
        CarHTML.put(1, "<title>Vehicle Telematics Dashboard</title>");
        CarHTML.put(2, "<body>");
-       CarHTML.put(3, "<h1 align=\"center\">Averages for # vehicles</h1>");
+       CarHTML.put(3, "<h1 align=\"center\">Averages for" + carInfo.size() + "vehicles</h1>");
        CarHTML.put(4, "<table align=\"center\">");
        CarHTML.put(5, "<tr>");
        CarHTML.put(6, "<th>Odometer (miles) |</th><th>Consumption (gallons) |</th><th>Last Oil Change |</th><th>Engine Size (liters)</th>");
@@ -99,36 +85,25 @@ public class TelematicsService {
                "            <th>VIN</th><th>Odometer (miles)</th><th>Consumption (gallons)</th><th>Last Oil Change</th><th>Engine Size (liters)</th>\n" +
                "        </tr>\n" +
                "        <tr>\n" +
-               "            <td align=\"center\">" + vehicleInfo.getVIN() + "/td><td align=\"center\">" +vehicleInfo.getOdometer() +"</td><td align=\"center\">" + vehicleInfo.getConsumption() + "/td><td align=\"center\">" + vehicleInfo.getOilChangeOdometer() + "</td align=\"center\"><td align=\"center\">" + vehicleInfo.getEngineSize() +"/td>\n" +
-               "        </tr>\n" +
-               "        <tr>\n" +
-               "            <td align=\"center\">45435</td><td align=\"center\">123</td><td align=\"center\">234</td><td align=\"center\">345</td align=\"center\"><td align=\"center\">4.5</td>\n" +
+               "            <td align=\"center\">" + vehicleInfo.getVIN() + "</td><td align=\"center\">" +vehicleInfo.getOdometer() +"</td><td align=\"center\">" + vehicleInfo.getConsumption() + "</td><td align=\"center\">" + vehicleInfo.getOilChangeOdometer() + "</td align=\"center\"><td align=\"center\">" + vehicleInfo.getEngineSize() +"</td>\n" +
                "        </tr>\n" +
                "    </table>");
        CarHTML.put(10, "</body>\n" +
                "</html>");
 
-       for (Integer name : CarHTML.keySet()){
-           String key = name.toString();
-           String value = CarHTML.get(name).toString();
-           System.out.println(key+ " " + value);
-       }
-
-//        FileWriter fWriter = null;
-//        BufferedWriter writer = null;
-//        try {
-//            fWriter = new FileWriter("newDashboard.html");
-//            writer = new BufferedWriter(fWriter);
-//            writer.write();
-//            writer.close(); //make sure you close the writer object
-//        } catch (Exception e) {
-//            //catch any exceptions here
-//        }
-
-
-
-
-
+        try {
+            File file2 = new File("newdashboard.html");
+            file2.createNewFile();
+            FileWriter writer = new FileWriter(file2);
+            for (Integer name : CarHTML.keySet()){
+                String value = CarHTML.get(name).toString();
+                writer.write(value);
+            }
+            writer.flush();
+            writer.close();
+        } catch (Exception e) {
+            //catch any exceptions here
+        }
     }
 }
 
