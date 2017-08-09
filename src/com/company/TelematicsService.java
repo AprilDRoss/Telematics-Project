@@ -61,22 +61,26 @@ public class TelematicsService {
         averageEngineSize = averageEngineSize / noOfVehicles;
 
         //need to adjust decimal places on average figures
-        String.format("%.1f", averageOdometer);
-        String.format("%.1f", averageConsumption);
-        String.format("%.1f", averageLastOilChange);
-        String.format("%.1f", averageEngineSize);
+        String avOdometer = String.format("%.1f", averageOdometer);
+        String avConsumption = String.format("%.1f", averageConsumption);
+        String avLastOilChange = String.format("%.1f", averageLastOilChange);
+        String avEngineSize = String.format("%.1f", averageEngineSize);
+
+        String s1 = "<h1 align=\"center\">Averages for # vehicles</h1>";
+        String replace_s1 = s1.replace("#", ""+carInfo.size()+"");
+        System.out.println(replace_s1);
 
        Map<Integer, String> CarHTML = new HashMap<Integer,String>();
        CarHTML.put(0, "<html>");
        CarHTML.put(1, "<title>Vehicle Telematics Dashboard</title>");
        CarHTML.put(2, "<body>");
-       CarHTML.put(3, "<h1 align=\"center\">Averages for" + carInfo.size() + "vehicles</h1>");
+       CarHTML.put(3, replace_s1);
        CarHTML.put(4, "<table align=\"center\">");
        CarHTML.put(5, "<tr>");
        CarHTML.put(6, "<th>Odometer (miles) |</th><th>Consumption (gallons) |</th><th>Last Oil Change |</th><th>Engine Size (liters)</th>");
        CarHTML.put(7, "</tr>");
        CarHTML.put(8, "<tr>\n" +
-               "            <td align=\"center\">"+ averageOdometer + "</td><td align=\"center\">"+averageConsumption + "</td><td align=\"center\">"+ averageLastOilChange + "</td align=\"center\"><td align=\"center\">" +averageEngineSize +"</td>\n" +
+               "            <td align=\"center\">"+ avOdometer + "</td><td align=\"center\">"+avConsumption + "</td><td align=\"center\">"+ avLastOilChange + "</td align=\"center\"><td align=\"center\">" +avEngineSize +"</td>\n" +
                "        </tr>");
        CarHTML.put(9, "</table>\n" +
                "    <h1 align=\"center\">History</h1>\n" +
@@ -102,7 +106,7 @@ public class TelematicsService {
             writer.flush();
             writer.close();
         } catch (Exception e) {
-            //catch any exceptions here
+            e.printStackTrace();
         }
     }
 }
